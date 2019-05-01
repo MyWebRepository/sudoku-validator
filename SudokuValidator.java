@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*; 
 
 public class SudokuValidator {
 	private static final int SIZE = 9; // Size of square 9 X 9
@@ -79,7 +80,13 @@ public class SudokuValidator {
 	private boolean validateRowSums(int[][] digits) {
 		for (int i = 0; i < SIZE; i++) {
 			int rowSum = 0;
+			Stack<Integer> digitStack = new Stack<Integer>(); 
 			for (int j = 0; j < SIZE; j++) {
+				if (digitStack.search(digits[i][j]) == -1) {
+					digitStack.push(digits[i][j]);
+				} else {
+					return false;
+				}
 				rowSum += digits[i][j];
 			}
 			if (rowSum != SUM) {
@@ -94,7 +101,13 @@ public class SudokuValidator {
 	private boolean validateColumnSums(int[][] digits) {
 		for (int i = 0; i < SIZE; i++) {
 			int columnSum = 0;
+			Stack<Integer> digitStack = new Stack<Integer>(); 
 			for (int j = 0; j < SIZE; j++) {
+				if (digitStack.search(digits[i][j]) == -1) {
+					digitStack.push(digits[i][j]);
+				} else {
+					return false;
+				}
 				columnSum += digits[j][i];
 			}
 			if (columnSum != SUM) {
@@ -112,8 +125,14 @@ public class SudokuValidator {
 			for (int j = 0; j < GRID_SIZE; j++) {
 				int sum = 0;
 				int n = j * GRID_SIZE;
+				Stack<Integer> digitStack = new Stack<Integer>(); 
 				for (int p = m; p < m + GRID_SIZE; p++) {
 					for (int q = n; q < n + GRID_SIZE; q++) {
+						if (digitStack.search(digits[p][q]) == -1) {
+							digitStack.push(digits[p][q]);
+						} else {
+							return false;
+						}
 						sum += digits[p][q];
 					}
 				}
